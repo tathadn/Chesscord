@@ -1,0 +1,25 @@
+<html>
+    <head>
+        {{> head}}
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <label>Client:</label>
+        <div id="username">{{user.username}}</div>
+        <label>Opponent:</label>
+        <div id="opponent"></div>
+        <div id="myBoard" style="width: 700px"></div>
+        <label>Status:</label>
+        <div id="status"></div>
+        <label>PGN:</label>
+        <div id="pgn"></div>
+
+        <script>
+            let playerColor = '{{color}}';
+            let username = '{{user.username}}'
+            console.log('Playing as ' + playerColor);
+        </script>
+        <script src="/public/js/index.js"></script>
+
+    </body>
+</html> 

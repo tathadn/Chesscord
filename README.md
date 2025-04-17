@@ -12,7 +12,7 @@ Online chess platform written in javascript meant to be a web application
 
 ## Implementation
 
-- javascript and html for the frontend
+- javascript and html for the frontend supplemented with server-side rendering with handlebars
 - node.js and express.js for the backend. 
 - mongodb for database applications
 - docker for deployment.
