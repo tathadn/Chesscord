@@ -28,7 +28,7 @@ module.exports = app => {
     });
 
 // Match
-    app.post('/match', express.text(), (req, res) => {
+    app.post('/match', (req, res) => {
         console.log(req.body);
     })
 
