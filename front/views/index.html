@@ -1,26 +1,53 @@
 <html>
-    <head>
-        {{> head}}
-    </head>
-    <body>
-        <h2>Game code</h2>
-        <input type="text" id="codeInput">
-        <button id="createGame">Create game</button>
-        <button id="joinGame">Join game</button>
-        <div style="color: red" id="errorMessage"></div>
+  <head>
+    {{> head}}
+  </head>
+  <body>
+    <h2>Game code</h2>
+    <input type="text" id="codeInput" />
+    <button id="createGame">Create game</button>
+    <button id="joinGame">Join game</button>
 
-        <script>
-            $('#createGame').on('click', function() {
-                window.location.replace('/white?code=' + $('#codeInput').val());
-            });
-            $('#joinGame').on('click', function() {
-                window.location.replace('/black?code=' + $('#codeInput').val());
-            });
+    <div style="color: red" id="errorMessage"></div>
+    <h2>AI Mode</h2>
+    <form id="aiForm">
+      <div>
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty" name="difficulty" required>
+          <option value="easy">Easy</option>
+          <option value="normal" selected>Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
 
-            var urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('error') == 'invalidCode') {
-                $('#errorMessage').text('Invalid invite code');
-            }
-        </script>
-    </body>
-</html> 
+      <div class="form-group">
+        <label for="pieceColor">Select Your Piece Color:</label>
+        <select id="pieceColor" name="pieceColor" required>
+          <option value="white">White</option>
+          <option value="black">Black</option>
+        </select>
+      </div>
+
+      <button type="submit">Play vs AI</button>
+    </form>
+    <script>
+      $("#createGame").on("click", function () {
+        window.location.replace("/white?code=" + $("#codeInput").val());
+      });
+      $("#joinGame").on("click", function () {
+        window.location.replace("/black?code=" + $("#codeInput").val());
+      });
+
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("error") == "invalidCode") {
+        $("#errorMessage").text("Invalid invite code");
+      }
+      $("#aiForm").on("submit", function (e) {
+        e.preventDefault();
+        const difficulty = document.getElementById("difficulty").value;
+        const pieceColor = document.getElementById("pieceColor").value;
+        window.location.replace(`ai/${pieceColor}?level=${difficulty}`);
+      });
+    </script>
+  </body>
+</html>

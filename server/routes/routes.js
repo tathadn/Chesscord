@@ -3,6 +3,17 @@ module.exports = app => {
     app.get('/', (req, res) => {
         res.render('index');
     });
+    
+    app.get('/ai/white', (req, res) => {
+        res.render('ai', {
+            color: 'white'
+        });
+    });
+    app.get('/ai/black', (req, res) => {
+        res.render('ai', {
+            color: 'black'
+        });
+    });
 
     app.get('/white', (req, res) => {
         res.render('game', {
@@ -18,4 +29,5 @@ module.exports = app => {
             color: 'black'
         });
     });
+    
 };  
