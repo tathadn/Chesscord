@@ -15,11 +15,14 @@ UserSchema.index({username: 1}, {unique: true});
 UserSchema.plugin(uniqueValidator);
 UserSchema.plugin(findOrCreate);
 
-UserSchema.methods.validPassword = (password) => {
+UserSchema.methods.validPassword = function(password) {
+  console.log(password)
   return bcrypt.compareSync(password, this.passwordHash);
 };
 
-UserSchema.virtual("password").set( (value) => {
+// virtual, statics, and methods can all perform any of these operations called the same way lol
+
+UserSchema.virtual("password").set(function(value) {
   this.passwordHash = bcrypt.hashSync(value, 12);
 });
 

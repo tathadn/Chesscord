@@ -8,27 +8,47 @@ const MatchSchema = new Schema({
     black: {type: String, required: true},
     began_on: {type: Date, default: () => new Date()},
     finished: {type: Boolean, default: false},
-    pgn: {type: String, default: 'start'},
+    fen: {type: String, default: 'start'},
+    pgn: {type: String, default: 'start'}
 })
 
-MatchSchema.statics.recordMatch = async (white, black, pgn, finished) => {
+MatchSchema.statics.recordMatch = async (white, black, pgn, fen, finished, matchID = null) => {
     try {
-        const match = new Match({
-            white: white,
-            black: black,
-            pgn: pgn,
-            finished: finished
-        });
-        
-        await match.save()
+        if (matchID != undefined) {
+            await Match.findByIdAndUpdate(
+                matchID,
+                { white, black, pgn, fen, finished },
+                { new: true }
+            );
+            console.log(`Match ${matchID} updated successfully.`);
+        } else {
+            const match = new Match({
+                white,
+                black,
+                fen,
+                pgn,
+                finished
+            });
 
-        if (white != "Guest")
-            await User.findOneAndUpdate({ username: white }, { $inc: { played: 1 }, $push: { matches: match._id } });
-        if (black != "Guest")
-            await User.findOneAndUpdate({ username: black }, { $inc: { played: 1 }, $push: { matches: match._id } });
-        
+            await match.save();
+
+            if (white !== "Guest") {
+                await User.findOneAndUpdate(
+                    { username: white },
+                    { $inc: { played: 1 }, $push: { matches: match._id } }
+                );
+            }
+            if (black !== "Guest" && black !== white) {
+                await User.findOneAndUpdate(
+                    { username: black },
+                    { $inc: { played: 1 }, $push: { matches: match._id } }
+                );
+            }
+
+            console.log(`New match created with ID: ${match._id}`);
+        }
     } catch (err) {
-        console.log(err);
+        console.error("Error in recordMatch:", err);
     }
 };
 

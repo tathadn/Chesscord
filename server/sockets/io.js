@@ -3,7 +3,7 @@ const { Chess } = require('chess.js');
 
 const Match = require('../models/match');
 
-module.exports = (io, sessionMiddleware) => {      
+module.exports = (io, sessionMiddleware, games) => {      
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
 
     io.use(wrap(sessionMiddleware));
@@ -12,59 +12,79 @@ module.exports = (io, sessionMiddleware) => {
     io.on('connection', socket => {
         console.log('New socket connection');
 
-        let currentCode = null;
-        let currentUser = (socket.request.user) ? socket.request.user.username : "Guest";
+        socket.on('hello', (data) => {
+            const {join, code, color, fen} = data;
+            console.log("hello called: " + join + code + color + fen)
+            socket.data.code = code;
+            socket.join(code)
 
-        socket.on('move', function(move) {
-            games[currentCode].board.move(move);
-            io.to(currentCode).emit('newMove', move);
-            if (games[currentCode].board.isDraw() || games[currentCode].board.isCheckmate()) {
-                games[currentCode].ongoing = false;
-                Match.recordMatch(games[currentCode].whitePlayer, games[currentCode].blackPlayer, games[currentCode].board.pgn(), true)
-            }
-        });
-        
-        socket.on('joinGame', function(data) {
-            currentCode = data.code;
-
-            socket.join(currentCode);
-            if (!games[currentCode]) {
-                games[currentCode] = {
-                    ongoing: false,
-                    whitePlayer: currentUser,
-                    blackPlayer: null,
-                    board: new Chess()
-                }
+            if (join == "create") {
+                games[code] = {}
+                lobby(games[code], color, socket.request.user?.username || "Guest", fen, true)
                 return;
-            } else if (!games[currentCode].ongoing) {
-                games[currentCode].blackPlayer = currentUser
-                games[currentCode].ongoing = true
-                games[currentCode].board.setHeader("Event", "N/A");
-                games[currentCode].board.setHeader("Site", "Chesscord");
-                games[currentCode].board.setHeader("Date", new Date().toLocaleDateString("en-US"));
-                games[currentCode].board.setHeader("Round", "N/A");
-                games[currentCode].board.setHeader("White", games[currentCode].whitePlayer);
-                games[currentCode].board.setHeader("Black", games[currentCode].blackPlayer);
-                io.to(currentCode).emit('startGame', games[currentCode].whitePlayer, games[currentCode].blackPlayer);
+            } else if (join == "join") {
+                lobby(games[code], color, socket.request.user?.username || "Guest", "", false)
+                io.to(socket.data.code).emit('startGame', games[code].white, games[code].black, games[code].start)
+                return;
+            } else if (join == "resume") {
+                games[code] = {}
+                games[code].matchID = code;
+                lobby(games[code], color, socket.request.user?.username || "Guest", fen, true)
                 return;
             }
 
-            currentUser = "spectator"
-            socket.emit('spectateGame', games[currentCode].whitePlayer, games[currentCode].blackPlayer, games[currentCode].board.fen());
-            return;
-        });
+            socket.data.code = null;
+            socket.emit('spectateGame', games[code].white, games[code].black, games[code].board.fen())
+        })
 
-        socket.on('disconnect', function() {
-            console.log('socket disconnected');
-            if (currentUser == "spectator") return;
+        socket.on('move', (move) => {
+            theMove = Move(games[socket.data.code], move)
+            io.to(socket.data.code).emit('newMove', theMove);
+        })
 
-            if (currentCode && (games[currentCode] && games[currentCode].ongoing) ) {
-                io.to(currentCode).emit('gameOverDisconnect');
-                if (games[currentCode].board.moveNumber() > 5)
-                    Match.recordMatch(games[currentCode].whitePlayer, games[currentCode].blackPlayer, games[currentCode].board.pgn(), false)
+        socket.on('disconnect', () => {
+            if (games[socket.data.code]) {
+                Match.recordMatch(games[socket.data.code].white, games[socket.data.code].black, games[socket.data.code].board.pgn(), games[socket.data.code].board.fen(), false, games[socket.data.code].matchID)
+                io.to(socket.data.code).emit('gameOverDisconnect');
+                delete games[socket.data.code]
             }
-            delete games[currentCode];
-        });
-
+        })
     });
-}; 
+};
+
+function lobby(room, color, name, fen, create) {
+    fen = (fen === '' || fen === "start") ? "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" : fen;
+
+    if (color == "white") {
+        room.white = name;
+    } else {
+        room.black = name;
+    }
+
+    if (create) {
+        room.start = fen;
+        room.board = new Chess(fen);
+    } else {
+        room.board.setHeader("Event", "N/A");
+        room.board.setHeader("Site", "Chesscord");
+        room.board.setHeader("Date", new Date().toLocaleDateString("en-US"));
+        room.board.setHeader("Round", "N/A");
+        room.board.setHeader("White", room.white);
+        room.board.setHeader("Black", room.black);
+    }
+
+    console.log("lobby called by " + name + "(" + color +"), created: " + create)
+    return;
+}
+
+function Move(room, move) {
+    console.log("move made by " + room.board.turn())
+    theMove = room.board.move(move);
+    
+    if (room.board.isDraw() || room.board.isCheckmate()) {
+        Match.recordMatch(room.white, room.black, room.board.pgn(), room.board.fen(), true, room[socket.data.code].matchID)
+        delete room
+    }
+
+    return theMove;
+}

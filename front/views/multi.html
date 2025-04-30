@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}}
+    <link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="/public/css/multi.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/chessboard-1.0.0.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+    <script defer src="/public/js/multi.js"></script>
+    <script>
+    const socket = io();
+    let username = '{{user.username}}'
+    let playerColor = '{{playerColor}}'
+    let code = '{{code}}'
+    let join = ('{{join}}' == "join") ? "join" : "spectate"
+    let fen = ""
+    </script>
+
+    <title>Play Chess Online - Chesscord</title>
+</head>
+<body>
+    {{> navbar}}
+    <div class="content">
+        <div class="left-pane">
+            <div class="board-container">
+                <div class="player-badges">
+                    <div class="badge" id="whitePlayer"></div>
+                    <div class="badge" id="blackPlayer"></div>
+                </div>
+                <div id="myBoard"></div>
+            </div>
+        </div>
+
+        <div class="right-pane">
+            <div class="status-dock">
+            {{#if playing}}
+                {{> dock-playing }}
+            {{else}}
+                <button class="open-dialog" data-target="create-dialog">Create</button>
+                <button class="open-dialog" data-target="join-dialog">Join</button>
+                <button class="open-dialog" data-target="resume-dialog">Resume</button>
+            {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <dialog class="dialog" id="create-dialog">
+        <button class="close-dialog"></button>
+        <form id="create-room" onsubmit="requestLobby(event)">
+            <label>Room code:</label>
+            <input type="text" name="code">
+            <label class="wrap">
+                <input type="radio" name="color" value="white">
+                <p>White</p>
+            </label>
+            <label class="wrap">
+                <input type="radio" name="color" value="black">
+                <p>Black</p>
+            </label>
+            <label>Fen:</label>
+            <input type="text" name="fen">
+            <button type="submit" form="create-room">Submit</button>
+        </form>
+    </dialog>
+    <dialog class="dialog" id="join-dialog">
+        <button class="close-dialog"></button>
+    </dialog>
+    <dialog class="dialog" id="resume-dialog">
+        <button class="close-dialog"></button>
+        <div class="list-matches">
+        </div>
+    </dialog>
+</body>
+</html>

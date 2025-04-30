@@ -20,7 +20,7 @@ const session = require("express-session"),
 const sessionMiddleware = session({
   name: 'server-session-cookie-id',
   secret: process.env.EXPRESS_SECRET,
-  saveUninitialized: true,
+  saveUninitialized: false,
   resave: true,
   store: new FileStore()
 })
@@ -51,9 +51,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(sessionMiddleware);
 app.use(passport.session());
 
-routes(app); 
-myIo(io, sessionMiddleware);
+let games = {};
+
+routes(app, games); 
+myIo(io, sessionMiddleware, games)
+
 server.listen(process.env.PORT);
-games = {};
 
 console.log(`Server listening on port ${process.env.PORT}`);

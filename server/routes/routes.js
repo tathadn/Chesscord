@@ -1,36 +1,62 @@
 const passport = require("passport")
 const User = require("../models/user")
+const Match = require("../models/match")
 express = require('express')
 
-module.exports = app => {
+module.exports = (app, games) => {
 
     app.get('/', (req, res) => {
-        res.render('index', {
-            user: req.user
-        });
+        res.render('landing', {user: req.user})
     });
 
-    app.get('/white', (req, res) => {
-        res.render('game', {
-            color: 'white',
-            user: req.user
-        });
-    });
-    app.get('/black', (req, res) => {
-        if (!games[req.query.code]) {
-            return res.redirect('/?error=invalidCode');
-        }
-
-        res.render('game', {
-            color: 'black',
-            user: req.user
-        });
+    app.get('/multiplayer', (req, res) => {
+        res.render('multi', {user: req.user});
     });
 
 // Match
-    app.post('/match', (req, res) => {
-        console.log(req.body);
-    })
+    app.get('/create', (req, res) => {
+        if (games[req.query.code]) {
+            return;
+        }
+        res.render('partials/dock-playing', (err, html) => {
+            if (err) res.status(500).send("Error creating game")
+            res.send(html)
+        })
+        return;
+    });
+
+    app.get('/join', (req, res) => {
+        if (!games[req.query.code]) {
+            return;
+        }
+        let color = (games[req.query.code].white == undefined) ?
+        "white" : "black"
+        res.render('multi', {code: req.query.code, playing: true, join: "join", playerColor: color, user: req.user})
+        return;
+    });
+
+    app.get('/resume', async (req, res) => {
+        if (!req.user) {
+            return res.redirect('/login');
+        }
+        try {
+            let matches = await Match.find({
+                finished: false,
+                $or: [
+                    { white: req.user.username },
+                    { black: req.user.username }
+                ]
+            }).select("white black fen");
+            res.render('partials/ongoing-matches', {matches: matches}, (err, html) => {
+                if (err) res.status(500).send("Error creating game")
+                res.send(html)
+            })
+        } catch (err) {
+            console.log(err)
+            res.status(500).send("Error fetching unfinished matches");
+        }
+        return;
+    });
 
 // Auth
     app.get('/login', (req, res) => {

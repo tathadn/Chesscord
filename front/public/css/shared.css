@@ -1,0 +1,79 @@
+html {
+    --bg-color: #f1f2eb;
+    --accent1: #242321;
+    --licorice: #1D1717;
+}
+
+html.dark-theme {
+    --bg-color: #242321;
+    --accent1: #f1f2eb;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    height: 6%;
+    padding: 1rem 5%;
+    display: flex;
+    color: var(--accent1);
+    align-items: center;
+}
+
+.navbar h1 {
+    margin: 0 0;
+}
+
+.navbar ul {
+    margin: 0 0;
+    padding: 0 20px;
+    padding-right: 5%;
+    gap: 20px;
+    display: flex;
+}
+
+.navbar li {
+    list-style: none;
+    padding: 0 0.5rem;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(to right, var(--bg-color), var(--accent1), var(--bg-color));
+    background-size: 0 0.1em;
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms;
+    cursor: default;
+}
+
+.navbar li:hover {
+    background-size: 100% 0.1em;
+}
+
+.navbar #login {
+    border: 2px solid var(--accent1);
+    border-radius: 20px;
+    padding: 0.5rem 1.1rem;
+    outline: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.navbar #login:hover {
+    background-color: var(--bg-color);
+}
+
+.navbar #moon {
+    height: 80%;
+    width: auto;
+    margin-right: 1.5rem;
+    object-fit: contain;
+    cursor: pointer;
+}
