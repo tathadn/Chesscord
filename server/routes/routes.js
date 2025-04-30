@@ -13,7 +13,21 @@ module.exports = (app, games) => {
         res.render('multi', {user: req.user});
     });
 
-// Match
+// AI Match
+    app.get('/ai/white', (req, res) => {
+        res.render('ai', {
+            color: 'white',
+            user: req.user
+        });
+    });
+    app.get('/ai/black', (req, res) => {
+        res.render('ai', {
+            color: 'black',
+            user: req.user
+        });
+    });
+
+// Online Match
     app.get('/create', (req, res) => {
         if (games[req.query.code]) {
             return;
@@ -26,9 +40,13 @@ module.exports = (app, games) => {
     });
 
     app.get('/join', (req, res) => {
-        if (!games[req.query.code]) {
+        if (!games[req.query.code]) return;
+
+        if (games[req.query.code].white && games[req.query.code].black) {
+            res.render('multi', {code: req.query.code, playing: true, join: "spectate", playerColor: "white", user: req.user})
             return;
         }
+
         let color = (games[req.query.code].white == undefined) ?
         "white" : "black"
         res.render('multi', {code: req.query.code, playing: true, join: "join", playerColor: color, user: req.user})

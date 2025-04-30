@@ -3,6 +3,10 @@ const { Chess } = require('chess.js');
 
 const Match = require('../models/match');
 
+const { ChessBoard } = require("../ai/board");
+const { evaluate } = require("../ai/evaluation");
+const { iterativeMinimax } = require("../ai/minimax");
+
 module.exports = (io, sessionMiddleware, games) => {      
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
 
@@ -11,47 +15,102 @@ module.exports = (io, sessionMiddleware, games) => {
     
     io.on('connection', socket => {
         console.log('New socket connection');
-
+        let currentCode = null;
+        let username = socket.request.user?.username || "Guest"
+        //Online
         socket.on('hello', (data) => {
             const {join, code, color, fen} = data;
             console.log("hello called: " + join + code + color + fen)
-            socket.data.code = code;
+
+            currentCode = code;
             socket.join(code)
 
-            if (join == "create") {
-                games[code] = {}
-                lobby(games[code], color, socket.request.user?.username || "Guest", fen, true)
-                return;
-            } else if (join == "join") {
-                lobby(games[code], color, socket.request.user?.username || "Guest", "", false)
-                io.to(socket.data.code).emit('startGame', games[code].white, games[code].black, games[code].start)
-                return;
-            } else if (join == "resume") {
-                games[code] = {}
-                games[code].matchID = code;
-                lobby(games[code], color, socket.request.user?.username || "Guest", fen, true)
-                return;
+            switch (join) {
+                case "create":
+                    games[code] = {}
+                    lobby(games[code], color, username, fen, true)
+                break;
+                case "resume":
+                    games[code] = {}
+                    games[code].matchID = code;
+                    lobby(games[code], color, username, fen, true)
+                break;
+                case "join":
+                    lobby(games[code], color, username, "", false)
+                    io.to(code).emit('startGame', games[code].white, games[code].black, games[code].start)
+                break;
+                case "spectate":
+                    currentCode = null;
+                    socket.emit('spectateGame', games[code].white, games[code].black, games[code].board.fen())
+                break;
+                default:
+                    console.log("Server state error on 'hello'")
             }
-
-            socket.data.code = null;
-            socket.emit('spectateGame', games[code].white, games[code].black, games[code].board.fen())
         })
 
+        // Augmented for AI
         socket.on('move', (move) => {
-            theMove = Move(games[socket.data.code], move)
-            io.to(socket.data.code).emit('newMove', theMove);
+            if (socket.data.ai) {
+                io.to(currentCode).emit("newMove", move);
+                return;
+            }
+            theMove = Move(games[currentCode], move)
+            io.to(currentCode).emit('newMove', theMove);
         })
 
         socket.on('disconnect', () => {
-            if (games[socket.data.code]) {
-                Match.recordMatch(games[socket.data.code].white, games[socket.data.code].black, games[socket.data.code].board.pgn(), games[socket.data.code].board.fen(), false, games[socket.data.code].matchID)
-                io.to(socket.data.code).emit('gameOverDisconnect');
-                delete games[socket.data.code]
+            if (socket.data.ai) return;
+
+            if (currentCode && games[currentCode]) {
+                Match.recordMatch(games[currentCode].white, games[currentCode].black, games[currentCode].board.pgn(), games[currentCode].board.fen(), false, games[currentCode].matchID)
+                io.to(currentCode).emit('gameOverDisconnect');
+                delete games[currentCode]
             }
         })
+
+        //AI
+        socket.on("aiGame", (data) => {
+            socket.data.ai = true;
+            currentCode = data.code;
+
+            socket.data.color = data.color == "white" ? "w" : "b";
+            socket.data.aiLevel = data.level === "normal" ? 2 : data.level === "easy" ? 1 : 3;
+          
+            socket.join(currentCode);
+            io.to(currentCode).emit("startGame");
+        });
+        
+        socket.on("getAIMove", (fen) => {
+            let board = new ChessBoard(fen)
+            let time = 2
+            console.log("ai move made")
+            let { evaluation, next_move } = iterativeMinimax(
+            board,
+            (board) => evaluate(board, board.turn, socket.data.aiLevel),
+            time
+            );
+            console.log(evaluation)
+            io.to(currentCode).emit("ai-move", next_move.move);
+        })
+
+        socket.on("undo", (newFen) => {
+            let board = new ChessBoard(newFen);
+            let time = 2;
+          
+            if (board.turn != socket.data.color) {
+              let { evaluation, next_move } = iterativeMinimax(
+                board,
+                (board) => evaluate(board, board.turn, socket.data.aiLevel),
+                time
+              );
+              io.to(currentCode).emit("ai-move", next_move.move);
+            }
+        });
+        
     });
 };
 
+// Multiplayer helper functions
 function lobby(room, color, name, fen, create) {
     fen = (fen === '' || fen === "start") ? "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" : fen;
 
@@ -82,7 +141,7 @@ function Move(room, move) {
     theMove = room.board.move(move);
     
     if (room.board.isDraw() || room.board.isCheckmate()) {
-        Match.recordMatch(room.white, room.black, room.board.pgn(), room.board.fen(), true, room[socket.data.code].matchID)
+        Match.recordMatch(room.white, room.black, room.board.pgn(), room.board.fen(), true, room.matchID)
         delete room
     }
 

@@ -8,6 +8,10 @@ let user_disconnected = false,
     game_started = false,
     game_over = false
 
+var urlParams = new URLSearchParams(window.location.search);
+
+const files = 'abcdefgh';
+
 function onDragStart(source, piece, position, orientation) {
     if (spectating || game_over || !game_started || user_disconnected) return false;
 
@@ -89,44 +93,59 @@ board = Chessboard('myBoard', config);
 
 if (playerColor == "black") {
     board.flip();
-    $whitePlayer.html("Loading..");
+    $whitePlayer.html(`AI (${urlParams.get("level")})`);
     $blackPlayer.html(username ? username: "Guest");
 } else {
     $whitePlayer.html(username ? username: "Guest");
-    $blackPlayer.html("Loading..");
+    $blackPlayer.html(`AI (${urlParams.get("level")})`);
 }
 
 updateStatus();
 
-console.log({code, join, playerColor, fen});
-socket.emit('hello', {code: code, join: join, color: playerColor, fen: fen})
+if (playerColor == "black") {
+  socket.emit('getAIMove', game.fen());
+}
 
-socket.on('newMove', function(move) {
-    console.log("got move")
-    game.move(move);
-    board.position(game.fen())
-    updateStatus();
+//Server Requests
+socket.on("startGame", function () {
+  game_started = true;
+  updateStatus();
 });
 
-socket.on('startGame', function(whitePlayer, blackPlayer, startFen) {
-    game_started = true;
-    game.load(startFen)
-    onSnapEnd();
-    playerColor == "white" ? $blackPlayer.html(blackPlayer) : $whitePlayer.html(whitePlayer);
-    updateStatus();
-})
+socket.emit('aiGame', {
+  code: "ai" + Math.random().toString(36).substring(2),
+  color: playerColor,
+  level: urlParams.get("level")
+});
 
-socket.on('spectateGame', function(whitePlayer, blackPlayer, startFen) {
-    spectating = true;
-    game_started = true;
-    game.load(startFen)
-    onSnapEnd();
-    $blackPlayer.html(blackPlayer);
-    $whitePlayer.html(whitePlayer);
-    updateStatus();
-})
+socket.on("ai-move", function (move) {  
+  let theMove = {
+    from: `${files[move.from.j]}${8-move.from.i}`,
+    to: `${files[move.to.j]}${8-move.to.i}`,
+    promotion: move.promotion, 
+  };
+  game.move(theMove);
+  board.position(game.fen());
+  updateStatus();
+});
 
-socket.on('gameOverDisconnect', function() {
-    user_disconnected = true;
-    updateStatus()
-}); 
+socket.on("newMove", function (move) {  
+  game.move(move);
+  board.position(game.fen());
+  updateStatus();
+  socket.emit("getAIMove", game.fen());
+});
+
+socket.on('gameOverDisconnect', function () {
+  user_disconnected = true;
+  updateStatus();
+});
+
+function undoMove() {
+  if (game.history().length > 0) {
+      game.undo();
+      board.position(game.fen());
+      socket.emit('undo', game.fen());
+      updateStatus();
+  }
+}
