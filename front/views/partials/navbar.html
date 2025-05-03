@@ -8,7 +8,15 @@
     </ul>
     {{#if user}}
         <button id="login" onclick="window.location='logout'">Logout</button>
-        {{else}}
-        <button id="login" onclick="window.location='login'">Login</button>
+    {{else}}
+        <button id="login" onclick="openAuthPopup('login')">Login</button>
     {{/if}}
 </header>
+
+<dialog class="auth-popup">
+    <button class="close-dialog" onclick="closeAuthPopup()"></button>
+    <div id="auth-content">
+        <!-- The content of the dialog will be dynamically updated -->
+    </div>
+    <div id="errors"></div>
+</dialog>

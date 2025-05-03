@@ -17,6 +17,7 @@ module.exports = (io, sessionMiddleware, games) => {
         console.log('New socket connection');
         let currentCode = null;
         let username = socket.request.user?.username || "Guest"
+        
         //Online
         socket.on('hello', (data) => {
             const {join, code, color, fen} = data;
@@ -106,7 +107,7 @@ module.exports = (io, sessionMiddleware, games) => {
               io.to(currentCode).emit("ai-move", next_move.move);
             }
         });
-        
+
     });
 };
 

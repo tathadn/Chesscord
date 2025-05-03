@@ -13,10 +13,10 @@
 .card {
     width: 333px;
     height: 250px;
-    background-color: var(--licorice);
-    border: 2px solid #ccc;
+    background-color: var(--accent1);
+    border: 2px solid var(--bg-color);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--dimshadow);
     color: var(--bg-color);
     cursor: pointer;
     display: flex;
@@ -25,20 +25,23 @@
 }
 
 .card h1 {
-    margin: 0 10px;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-size: 2rem;
+    color: var(--bg-color);
+    margin: 0 0.9rem;
+    margin-top: 8px;
+    font-size: 2.1rem;
     font-weight: bold;
 }
 
 .card p {
-    margin: 0 10px;
+    margin: 0 0.9rem;
+    margin-bottom: 0.9rem;
+    color: var(--bg-color);
+    font-size: 1.3rem;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px var(--deepshadow);
 }
 
 .card-header {
@@ -58,4 +61,56 @@
 }
 .card:hover .card-header img {
     transform: scale(1.1);
+}
+
+/* AI Form Styling */
+
+#ai-dialog {
+    background-color: var(--accent1);
+}
+
+#ai-dialog h2 {
+    text-align: center;
+    font-size: 2.1rem;
+}
+
+#ai-form label {
+    font-size: 2rem;
+}
+
+#ai-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: fit-content;
+    gap: 20px;
+}
+
+
+#ai-form div {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#ai-form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border1);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    font-size: 1rem;
+    color: var(--accent1);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#ai-form select:active {
+    border-color: var(--bg-color);
+    box-shadow: 0 0 5px var(--dimshadow);
+    outline: none;
+}
+
+#ai-form select:hover {
+    filter: brightness(0.9);
 }

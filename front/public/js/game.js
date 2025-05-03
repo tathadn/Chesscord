@@ -71,8 +71,11 @@ function updateStatus() {
         }
     }
 
+    const pgn = game.pgn();
+    const movesOnly = pgn.split(']').slice(-1)[0].trim();
+
     $status.html(status)
-    $pgn.html(game.pgn());
+    $pgn.html(movesOnly);
 }
 
 let config = {
@@ -110,21 +113,23 @@ socket.on('newMove', function(move) {
 
 socket.on('startGame', function(whitePlayer, blackPlayer, startFen) {
     game_started = true;
-    game.load(startFen)
+    game.load(startFen);
+
     onSnapEnd();
     playerColor == "white" ? $blackPlayer.html(blackPlayer) : $whitePlayer.html(whitePlayer);
     updateStatus();
-})
+});
 
 socket.on('spectateGame', function(whitePlayer, blackPlayer, startFen) {
     spectating = true;
     game_started = true;
-    game.load(startFen)
+    game.load(startFen);
+
     onSnapEnd();
     $blackPlayer.html(blackPlayer);
     $whitePlayer.html(whitePlayer);
     updateStatus();
-})
+});
 
 socket.on('gameOverDisconnect', function() {
     user_disconnected = true;

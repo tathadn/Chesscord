@@ -102,14 +102,13 @@ if (playerColor == "black") {
 
 updateStatus();
 
-if (playerColor == "black") {
-  socket.emit('getAIMove', game.fen());
-}
-
 //Server Requests
 socket.on("startGame", function () {
   game_started = true;
   updateStatus();
+  if (playerColor == "black") {
+    socket.emit('getAIMove', game.fen());
+  }
 });
 
 socket.emit('aiGame', {

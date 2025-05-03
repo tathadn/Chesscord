@@ -38,14 +38,19 @@
         </div>
     </div>
     <dialog id="ai-dialog" class="dialog">
-        <button class="close-dialog" onclick="document.getElementById('ai-dialog').close()">X</button>
+        <button type="button" class="close-dialog" onclick="document.getElementById('ai-dialog').close()"></button>
+        <h2>Play Against AI</h2>
         <form id="ai-form" method="dialog" onsubmit="startAIGame(event)">
-            <h2>Play Against AI</h2>
-            <label for="color">Choose your color:</label>
-            <select id="color" name="color" required>
-                <option value="white">White</option>
-                <option value="black">Black</option>
-            </select>
+            <div>
+                <label class="wrap">
+                    <input type="radio" name="color" value="white" checked>
+                    <p>White</p>
+                </label>
+                <label class="wrap">
+                    <input type="radio" name="color" value="black">
+                    <p>Black</p>
+                </label>
+            </div>
             <label for="level">Choose difficulty:</label>
             <select id="level" name="level" required>
                 <option value="easy">Easy</option>

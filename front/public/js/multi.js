@@ -11,6 +11,9 @@ $('.open-dialog').on('click', async function() {
         let html = await res.text();
         $('.list-matches').html(html);
     }
+    if (targetDialogId == "login-dialog") {
+        openAuthPopup('login');
+    }
     current_dialog.show();
 });
 
@@ -75,6 +78,27 @@ async function requestLobby(event) {
     history.pushState({}, '', window.location.href + req)
     $('.status-dock').html(html);
 }
+
+async function joinRoom(event) {
+    event.preventDefault();
+
+    let form = event.target;
+    let code = form.elements["code"].value;
+
+    let req = "/?code=" + code;
+    window.location.href = window.location.origin + "/join" + req;
+}
+
+function copyJoin(e) {
+    let req = "/?code=" + code;
+    let joinUrl = window.location.origin + "/join" + req;
+
+    navigator.clipboard.writeText(joinUrl).then(() => {
+        $(e.target).closest('svg').css('fill', 'green');
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
+};
 
 $(window).resize(() => board.resize());
 $('#whitePlayer').html(username);

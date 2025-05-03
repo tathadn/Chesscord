@@ -37,9 +37,18 @@
             {{#if playing}}
                 {{> dock-playing }}
             {{else}}
-                <button class="open-dialog" data-target="create-dialog">Create</button>
-                <button class="open-dialog" data-target="join-dialog">Join</button>
-                <button class="open-dialog" data-target="resume-dialog">Resume</button>
+                <div class="lobby-actions">
+                    <button class="open-dialog" data-target="create-dialog">Create</button>
+                    {{#if user}}
+                    <button class="open-dialog" data-target="resume-dialog">Resume</button>
+                    {{else}}
+                    <button class="open-dialog" data-target="login-dialog">Resume</button>
+                    {{/if}}
+                </div>
+                <form id="join-room" onsubmit="joinRoom(event)">
+                    <input type="text" name="code" placeholder="Enter room code" required>
+                    <button type="submit">Join</button>
+                </form>
             {{/if}}
             </div>
         </div>
@@ -51,20 +60,18 @@
             <label>Room code:</label>
             <input type="text" name="code">
             <label class="wrap">
-                <input type="radio" name="color" value="white">
-                <p>White</p>
+            <input type="radio" name="color" value="white" checked>
+            <p>White</p>
             </label>
             <label class="wrap">
-                <input type="radio" name="color" value="black">
-                <p>Black</p>
+            <input type="radio" name="color" value="black">
+            <p>Black</p>
             </label>
+            <div style="width: 100%"></div>
             <label>Fen:</label>
             <input type="text" name="fen">
             <button type="submit" form="create-room">Submit</button>
         </form>
-    </dialog>
-    <dialog class="dialog" id="join-dialog">
-        <button class="close-dialog"></button>
     </dialog>
     <dialog class="dialog" id="resume-dialog">
         <button class="close-dialog"></button>

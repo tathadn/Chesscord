@@ -77,16 +77,29 @@ module.exports = (app, games) => {
     });
 
 // Auth
-    app.get('/login', (req, res) => {
-        res.render('login');
-    })
-
-    app.get('/register', (req, res) => {
-        res.render('register');
-    })
-
-    app.post('/login', passport.authenticate('local', {successRedirect: "/", failureRedirect: "/login"}), (req, res) => {
-        console.log("POST: LOGIN");
+    app.post('/login', async (req, res, next) => {
+        passport.authenticate('local', (err, user, info) => {
+            if (err) {
+                if (err.message === "Invalid Credentials") {
+                    console.log("Error during authentication: Invalid Credentials");
+                    return res.status(401).type('text/plain').send("Invalid username or password");
+                }
+                console.log("Error during authentication:", err);
+                return res.status(500).type('text/plain').send("An error occurred during authentication");
+            }
+            if (!user) {
+                console.log("Login failed:", info.message);
+                return res.status(401).type('text/plain').send(info.message || "Invalid username or password.");
+            }
+            req.logIn(user, (err) => {
+                if (err) {
+                    console.log("Error logging in as user:", err);
+                    return res.status(500).send("An error occurred during login.");
+                }
+                console.log("POST: LOGIN - Success");
+                res.status(200).send("Login successful.");
+            });
+        })(req, res, next);
     });
 
     app.post("/register", async (req, res, next) => {
