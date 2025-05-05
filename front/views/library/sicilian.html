@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicilian Defense | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Sicilian Defense</h1>
+        <p class="eco-code">ECO Code: B20–B99</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. e4 c5</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Sicilian Defense is the most popular choice of aggressive players with the black pieces. Often White will play 2.Nf3 and 3.d4 which will gain central space, but it allows Black to benefit by exchanging a central pawn for a bishop's pawn.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Creates unbalanced games</li>
+                <li>Black has good attacking chances</li>
+                <li>An excellent opening to play when you need to win</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>White has many ways to meet the Sicilian</li>
+                <li>White gets attacking chances in the main variations</li>
+                <li>Lots of theory behind it</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/sicilian.js"></script>
+
+</html>

@@ -11,17 +11,14 @@ document.getElementById("moon").onclick = () => {
 }
 
 
-// Open the auth popup and load the specified form (login or register)
 function openAuthPopup(formType) {
     const dialog = document.querySelector('.auth-popup');
     const authContent = document.getElementById('auth-content');
     const errorElement = document.getElementById('errors');
 
     console.log(formType);
-    // Clear any previous errors
     errorElement.innerHTML = '';
 
-    // Load the appropriate form
     if (formType === 'login') {
         authContent.innerHTML = `
             <h2>Login</h2>
@@ -48,11 +45,9 @@ function openAuthPopup(formType) {
         `;
     }
 
-    // Show the dialog
     dialog.showModal();
 }
 
-// Close the auth popup
 function closeAuthPopup() {
     const dialog = document.querySelector('.auth-popup');
     if (dialog) {
@@ -60,7 +55,6 @@ function closeAuthPopup() {
     }
 }
 
-// Register function
 async function doRegister(e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
@@ -112,15 +106,12 @@ async function doLogin(e) {
         const result = await response.text();
 
         if (!response.ok) {
-            // Display the error message in the popup
             errorElement.style.color = 'red';
             errorElement.innerText = result || 'Invalid username or password.';
         } else {
-            // Redirect to the landing page or another page upon successful login
             window.location.href = '/';
         }
     } catch (error) {
-        // Handle unexpected errors
         errorElement.style.color = 'red';
         errorElement.innerText = 'An unexpected error occurred. Please try again.';
     }

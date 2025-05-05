@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alekhine's Defense | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Alekhine's Defense</h1>
+        <p class="eco-code">ECO Code: B02–B05</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. e4 Nf6</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Alekhine Defense is 1.e4 Nf6. Games almost always continue 2.e5 Nd5 followed mostly by 3.d4 d6. Black's third move is the first little poke at White's center.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Original and tricky</li>
+                <li>Less common which may allow opposing player to slip up due to not knowing it as much</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>White gains central space</li>
+                <li>Black has to move the knight several times</li>
+                <li>Risky</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/alekhine.js"></script>
+
+</html>

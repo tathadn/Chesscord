@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen's Gambit | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Queen's Gambit</h1>
+        <p class="eco-code">ECO Code: D30–D42</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. d4 d5 2. c4</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Queen's Gambit starts after the moves 1.d4 d5 2.c4. White's second move attacks the d5-pawn, increasing control over the center. If Black decides to take the pawn with 2...dxc4, White will have successfully deflected one of Black's central pawns to the board's wing.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Fights to control the center</li>
+                <li>Puts immediate pressure on Black</li>
+                <li>Gains space</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>White may have to spend time getting the pawn back</li>
+                <li>Less attacking chances against the black king</li>
+                <li>Black may aim to counter d4</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/queens-gambit.js"></script>
+
+</html>

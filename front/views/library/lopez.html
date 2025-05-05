@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruy Lopez | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Ruy Lopez</h1>
+        <p class="eco-code">ECO Code: C60–C99</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. e4 e5 2. Nf3 Nc6 3. Bb5</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Ruy Lopez starts after the moves 1.e4 e5 2.Nf3 Nc6 3.Bb5. White finishes the development of their kingside pieces and gets ready to castle short. The critical idea behind 3.Bb5, however, is to attack Black's c6-knight. White fights for the control of the central d4 and e5-squares and indirectly threatens the black e5-pawn by attacking its only defender.
+
+            </p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Leads to complex and multifaceted play</li>
+                <li>Tends to give White long-term pressure</li>
+                <li>White develops rapidly, and castles quickly</li>
+                <li>Good lines for both tactical and positional players</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>Extensive theory may prove difficult to learn</li>
+                <li>Black has different defenses to choose from</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/lopez.js"></script>
+
+</html>

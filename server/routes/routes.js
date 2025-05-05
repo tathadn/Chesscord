@@ -76,6 +76,81 @@ module.exports = (app, games) => {
         return;
     });
 
+// Library
+app.get('/library', (req, res) => {
+    res.render('library'); // pulls library.html from views folder
+});
+
+// opens up the pages from the library folder in views folder
+app.get('/library/italian', (req, res) => {
+    res.render('library/italian');
+});
+
+app.get('/library/sicilian', (req, res) => {
+    res.render('library/sicilian');
+});
+app.get('/library/french', (req, res) => {
+    res.render('library/french');
+});
+app.get('/library/lopez', (req, res) => {
+    res.render('library/lopez');
+});
+app.get('/library/slav', (req, res) => {
+    res.render('library/slav');
+});
+app.get('/library/caro', (req, res) => {
+    res.render('library/caro');
+});
+app.get('/library/scan', (req, res) => {
+    res.render('library/scan');
+});
+app.get('/library/pirc', (req, res) => {
+    res.render('library/pirc');
+});
+app.get('/library/alekhine', (req, res) => {
+    res.render('library/alekhine');
+});
+app.get('/library/kings-gambit', (req, res) => {
+    res.render('library/kings-gambit');
+});
+app.get('/library/scotch', (req, res) => {
+    res.render('library/scotch');
+});
+app.get('/library/queens-gambit', (req, res) => {
+    res.render('library/queens-gambit');
+});
+// start of the newer library pages
+app.get('/library/kings-indian', (req, res) => {
+    res.render('library/kings-indian');
+});
+app.get('/library/nimzo', (req, res) => {
+    res.render('library/nimzo');
+});
+app.get('/library/queens-indian', (req, res) => {
+    res.render('library/queens-indian');
+});
+app.get('/library/catalan', (req, res) => {
+    res.render('library/catalan');
+});
+app.get('/library/bogo-indian', (req, res) => {
+    res.render('library/bogo-indian');
+});
+app.get('/library/grunfeld', (req, res) => {
+    res.render('library/grunfeld');
+});
+app.get('/library/dutch', (req, res) => {
+    res.render('library/dutch');
+});
+app.get('/library/trompowsky', (req, res) => {
+    res.render('library/trompowsky');
+});
+app.get('/library/benko', (req, res) => {
+    res.render('library/benko');
+});
+app.get('/library/london', (req, res) => {
+    res.render('library/london');
+});
+
 // Auth
     app.post('/login', async (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
