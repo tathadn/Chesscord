@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King's Indian Defense | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>King's Indian Defense</h1>
+        <p class="eco-code">ECO Code: E60–E99</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. d4 Nf6 2. c4 g6</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The King's Indian Defense arises after the moves 1.d4 Nf6 2.c4 g6. Like in other hypermodern openings, Black doesn't try to control the center with pawns. Instead, the idea is to let White build a strong pawn center and then counter-attack it using pieces and pawns.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Sharp opening</li>
+                <li>Leads to fascinating positions</li>
+                <li>Black often gets attack against White king</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>White usually gets a space advantage</li>
+                <li>White typically builds considerable pressure on the queen side</li>
+                <li>Different responses for every style of player</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/kings-indian.js"></script>
+
+</html>

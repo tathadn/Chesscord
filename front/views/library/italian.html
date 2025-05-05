@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian Game | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Italian Game</h1>
+        <p class="eco-code">ECO Code: C50–C54</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. e4 e5 2. Nf3 Nc6 3. Bc4</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Italian Game is one of the oldest recorded chess openings, emphasizing quick development and control of the center. It leads to open positions and can transition into multiple variations like the Giuoco Piano or Evans Gambit.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Easy for beginners to learn</li>
+                <li>Strong central control</li>
+                <li>Flexible development paths</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>Can lead to passive positions if not played actively</li>
+                <li>Sharp tactics in certain lines</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/italian.js"></script>
+
+</html>

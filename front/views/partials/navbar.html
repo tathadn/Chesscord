@@ -1,0 +1,14 @@
+<header class="navbar">
+    <img id="moon" src="/public/img/moon.svg">
+    <h1>Chesscord</h1>
+    <div style="flex-grow: 1;"></div>
+    <ul>
+        <li onclick="window.location='/'">Landing</li>
+        <li onclick="window.location='/'">Settings</li>
+    </ul>
+    {{#if user}}
+        <button id="login" onclick="window.location='logout'">Logout</button>
+        {{else}}
+        <button id="login" onclick="window.location='login'">Login</button>
+    {{/if}}
+</header>

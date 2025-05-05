@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirc Defense | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Pirc Defense</h1>
+        <p class="eco-code">ECO Code: B07-B09</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. e4 d6 2. d4 Nf6</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Pirc Defense is a complicated hypermodern reply to the King's Pawn Opening. Black's idea with 1...d6 is to follow 2...Nf6, without giving White the option to kick the knight by advancing with e5.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Black has a lot of freedom of different ways to play</li>
+                <li>Tricky, active defesne</li>
+                <li>White can be provoked easily</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>White has several systems which lead to a raging attack</li>
+                <li>White can play carefully to restrict Black</li>
+                <li>White has many differnt ways to combat the Pirc</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/pirc.js"></script>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slav Defense | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Slav Defense</h1>
+        <p class="eco-code">ECO Code: D10–D19</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. d4 d5 2. c4 c6</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Slav Defense starts after the moves 1.d4 d5 2.c4 c6. Black avoids taking White's c4-pawn to keep their firm grasp of the center, particularly the e4-square. The characteristic 2...c6 supports the d5-pawn while not locking the light-squared bishop inside the pawn chain as it happens in other openings such as the French Defense and Queen's Gambit Declined.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>C8 bishop has a free diagnoal to develop</li>
+                <li>Black maintains solid central point</li>
+                <li>Black might capture c4 pawn</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>Black's development slow</li>
+                <li>Hitting back with ...c5 will lose a move</li>
+                <li>C6 pawn blocks natural development of the knight</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/slav.js"></script>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trompowsky Attack | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Trompowsky Attack</h1>
+        <p class="eco-code">ECO Code: D00</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. d4 Nf6 2. Bg5</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Trompowsky Attack starts after the moves 1.d4 Nf6 2.Bg5. White develops their dark-squared bishop on the second move and attacks Black's knight. White immediately threatens to take the knight to damage Black's pawn structure. Black can either let White double their pawns or avoid it, as both lines are perfectly playable.</p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>May catch unprepared Black players off guard</li>
+                <li>There is not a lot of theory to learn</li>
+                <li>White can play aggressively or positionally</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>Hard to equalize Black if they know theory</li>
+                <li>Black has variety of setups to play against it</li>
+                <li>White's threat of doubling Black's pawn is not as dangerous</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/trompowsky.js"></script>
+
+</html>

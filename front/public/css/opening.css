@@ -1,0 +1,14 @@
+.opening-container { 
+    max-width: 800px; 
+    margin: auto; 
+    padding: 2rem; 
+    font-family: Arial, sans-serif; 
+}
+
+.board-image img { max-width: 100%; 
+    border: 1px solid #ccc; 
+}
+
+ul { 
+    padding-left: 1.5rem; 
+}

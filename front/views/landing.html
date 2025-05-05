@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}}
+    <link rel="stylesheet" href="/public/css/landing.css">
+    <title>Chesscord</title>
+</head>
+<body>
+    {{> navbar}}
+    <div class="cards">
+        <div class="card" onclick="location.href='/multiplayer'">
+            <div class="card-header">
+                <img src="/public/img/chessboard.png">
+            </div>
+            <h1>Play Online</h1>
+            <p>Play against another player</p>
+        </div>
+        <div class="card" onclick="document.getElementById('ai-dialog').showModal()">
+            <div class="card-header">
+                <img src="/public/img/chessai.png">
+            </div>
+            <h1>Play Computer</h1>
+            <p>Play against an AI agent</p>
+        </div>
+        <div class="card" onclick="location.href='/library'"> <!--updated route to get to the library page-->
+            <div class="card-header">
+                <img src="/public/img/bookshelf.png">
+            </div>
+            <h1>Library</h1>
+            <p>Find matches and positions</p>
+        </div>        
+        <div class="card">
+            <div class="card-header">
+                <img src="/public/img/chessboard.png">
+            </div>
+            <h1>Header</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
+        </div>
+    </div>
+    <dialog id="ai-dialog" class="dialog">
+        <button class="close-dialog" onclick="document.getElementById('ai-dialog').close()">X</button>
+        <form id="ai-form" method="dialog" onsubmit="startAIGame(event)">
+            <h2>Play Against AI</h2>
+            <label for="color">Choose your color:</label>
+            <select id="color" name="color" required>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+            </select>
+            <label for="level">Choose difficulty:</label>
+            <select id="level" name="level" required>
+                <option value="easy">Easy</option>
+                <option value="normal">Normal</option>
+                <option value="hard">Hard</option>
+            </select>
+            <button type="submit">Start Game</button>
+        </form>
+    </dialog>
+    <script>
+        function startAIGame(event) {
+            event.preventDefault();
+    
+            const form = document.getElementById('ai-form');
+            const color = form.color.value;
+            const level = form.level.value;
+
+            window.location.href = `/ai/${color}?level=${level}`;
+        }
+    </script>
+</body>
+</html>

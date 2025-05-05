@@ -1,20 +1,32 @@
 <html>
     <head>
         {{> head}}
-    </head>
-    <body>
-
-        <div id="myBoard" style="width: 700px"></div>
-        <label>Status:</label>
-        <div id="status"></div>
-        <label>PGN:</label>
-        <div id="pgn"></div>
-
+        <link rel="stylesheet" href="/public/css/game.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <script defer src="/public/js/index.js"></script>
         <script>
             let playerColor = '{{color}}';
+            let user = "{{user.username}}";
             console.log('Playing as ' + playerColor);
         </script>
-        <script src="/public/js/index.js"></script>
+    </head>
+    <body>
+        <div class="game-container">
+            <div class="player-names">
+                <div id="whitePlayer"></div>
+                <div id="blackPlayer"></div>
+            </div>
+            <div class="board-container">
+                <div id="myBoard"></div>
+            </div>
+        </div>
 
+        <div class="status-container">
+            <label>Status:</label>
+            <div id="status"></div>
+            <label>PGN:</label>
+            <div id="pgn"></div>
+            <button id="leave" onclick="window.location.href='/'">leave</button>
+        </div>
     </body>
-</html> 
+</html>
