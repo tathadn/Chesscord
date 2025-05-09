@@ -1,0 +1,22 @@
+<header class="navbar">
+    <img id="moon" src="/public/img/moon.svg">
+    <h1>Chesscord</h1>
+    <div style="flex-grow: 1;"></div>
+    <ul>
+        <li onclick="window.location='/'">Landing</li>
+        <li onclick="window.location='/'">Settings</li>
+    </ul>
+    {{#if user}}
+        <button id="login" onclick="window.location='logout'">Logout</button>
+    {{else}}
+        <button id="login" onclick="openAuthPopup('login')">Login</button>
+    {{/if}}
+</header>
+
+<dialog class="auth-popup">
+    <button class="close-dialog" onclick="closeAuthPopup()"></button>
+    <div id="auth-content">
+        <!-- The content of the dialog will be dynamically updated -->
+    </div>
+    <div id="errors"></div>
+</dialog>

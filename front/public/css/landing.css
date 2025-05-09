@@ -1,0 +1,116 @@
+.cards {
+    padding: 40px;
+    margin: auto 0;
+    max-width: 1000px;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
+.card {
+    width: 333px;
+    height: 250px;
+    background-color: var(--accent1);
+    border: 2px solid var(--bg-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--dimshadow);
+    color: var(--bg-color);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card h1 {
+    color: var(--bg-color);
+    margin: 0 0.9rem;
+    margin-top: 8px;
+    font-size: 2.1rem;
+    font-weight: bold;
+}
+
+.card p {
+    margin: 0 0.9rem;
+    margin-bottom: 0.9rem;
+    color: var(--bg-color);
+    font-size: 1.3rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px var(--deepshadow);
+}
+
+.card-header {
+    height: 50%;
+    width: 100%;
+    overflow: hidden;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.card-header img {
+    object-fit: cover;
+    transition: transform 0.3s;
+    height: 100%;
+    width: 100%;
+    padding: 0 0;
+}
+.card:hover .card-header img {
+    transform: scale(1.1);
+}
+
+/* AI Form Styling */
+
+#ai-dialog {
+    background-color: var(--accent1);
+}
+
+#ai-dialog h2 {
+    text-align: center;
+    font-size: 2.1rem;
+}
+
+#ai-form label {
+    font-size: 2rem;
+}
+
+#ai-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: fit-content;
+    gap: 20px;
+}
+
+
+#ai-form div {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#ai-form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border1);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    font-size: 1rem;
+    color: var(--accent1);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#ai-form select:active {
+    border-color: var(--bg-color);
+    box-shadow: 0 0 5px var(--dimshadow);
+    outline: none;
+}
+
+#ai-form select:hover {
+    filter: brightness(0.9);
+}

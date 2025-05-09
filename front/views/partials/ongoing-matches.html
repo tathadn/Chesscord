@@ -1,0 +1,13 @@
+<ul class="matches">
+    {{#each matches}}
+        <li class="match-badge" 
+            data-id="{{this._id}}" 
+            data-white="{{this.white}}" 
+            data-black="{{this.black}}" 
+            data-fen="{{this.fen}}">
+            <strong>{{this.white}}</strong> vs <strong>{{this.black}}</strong>
+            <br><code>{{this.fen}}</code>
+            <br>
+        </li>
+    {{/each}}
+</ul>

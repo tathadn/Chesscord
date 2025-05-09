@@ -1,0 +1,26 @@
+.opening-container { 
+    max-width: 800px; 
+    margin: auto; 
+    padding: 2rem; 
+    font-family: "Zain", sans-serif;
+    color: var(--accent1);
+}
+
+.opening-container h1, 
+.opening-container h2, 
+.opening-container h3 { 
+    font-size: 2rem;
+}
+
+.opening-container p, a { 
+    font-size: 1.5rem;
+}
+
+.board-image img { max-width: 100%; 
+    border: 1px solid #ccc; 
+}
+
+ul { 
+    padding-left: 1.5rem; 
+    font-size: 1.3rem;
+}

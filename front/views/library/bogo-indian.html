@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bogo-Indian Defense | Chesscord Library</title>
+    <link rel="stylesheet" href="/public/css/opening.css">
+</head>
+<body>
+    {{> navbar}}
+
+    <div class="opening-container">
+        <h1>Bogo-Indian Defense</h1>
+        <p class="eco-code">ECO Code: E11</p>
+
+        <div class="moves-section">
+            <h2>Opening Moves</h2>
+            <p><strong>1. d4 Nf6 2. c4 e6 3. Nf3 Bb4+</strong></p>
+            <div id="board" style="width: 400px; margin: 2rem auto;"></div>
+            <button onclick="playOpening()">Play Opening</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>The Bogo-Indian begins 1.d4 Nf6 2.c4 e6 3.Nf3 Bb4+. Variations branch out depending on how White blocks the check. </p>
+
+            <h3>Strengths</h3>
+            <ul>
+                <li>Simple to play</li>
+                <li>Strategic and sound</li>
+                <li>Not very theoretical</li>
+            </ul>
+
+            <h3>Weaknesses</h3>
+            <ul>
+                <li>White may be able to capture two bishops</li>
+                <li>White maintains a space advantage</li>
+                <li>Not very sharp</li>
+            </ul>
+
+        <div class="back-link">
+            <a href="/library">← Back to Library</a>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="/public/css/chessboard-1.0.0.min.css">
+<script src="/public/js/chessboard-1.0.0.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chess.js@1.2.0/dist/esm/chess.js"></script>
+<script src="/public/js/library/bogo.js"></script>
+
+</html>

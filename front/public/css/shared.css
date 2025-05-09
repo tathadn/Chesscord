@@ -1,0 +1,236 @@
+html {
+    --bg-color: #EFE9F4;
+    --accent1: #30323D;
+    --accent2: #0D0221;
+
+    --border1: #ccc;
+
+    --alt-color: white;
+    --alt-color1: black;
+
+    --deepshadow: rgba(0, 0, 0, 0.2);
+    --dimshadow: rgba(0, 0, 0, 0.1);
+}
+
+html.dark-theme {
+    --bg-color: #30323D;
+    --accent1: #EFE9F4; 
+    --accent2: #6d7559;
+
+    --border1: #444;
+
+    --alt-color: #353131;
+    --alt-color1: white;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color);
+    font-family: "Zain", sans-serif;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s ease;
+}
+
+.navbar {
+    height: 75px;
+    padding: 1rem 4rem;
+    display: flex;
+    color: var(--accent1);
+    align-items: center;
+}
+
+.navbar h1 {
+    margin: 0 0;
+    font-family: "Zain", sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.navbar ul {
+    margin: 0 0;
+    padding: 0 20px;
+    padding-right: 5%;
+    gap: 20px;
+    display: flex;
+}
+
+.navbar li {
+    list-style: none;
+    font-size: 1.7rem;
+    padding: 0 0.5rem;
+    padding-bottom: 0.3rem;
+    background: linear-gradient(to right, var(--bg-color), var(--accent1), var(--bg-color));
+    background-size: 0 0.1em;
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms;
+    cursor: default;
+}
+
+.navbar li:hover {
+    background-size: 100% 0.1em;
+}
+
+.navbar #login {
+    border: 2px solid var(--accent1);
+    border-radius: 20px;
+    padding: 0.3rem 1.2rem;
+    outline: none;
+    background: none;
+    font: inherit;
+    font-size: 1.5rem;
+    color: inherit;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.navbar #login:hover {
+    filter: brightness(0.9);
+}
+
+.navbar #moon {
+    height: 77%;
+    width: auto;
+    margin-right: 1.5rem;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+/* Auth */
+
+.auth-popup {
+    width: 300px;
+    height: 350px;
+    background-color: var(--accent1);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px var(--deepshadow);
+}
+
+#auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Common Styling */
+
+#auth-form input[type=text], #create-room input[type="text"],
+#join-room input[type="text"], #auth-form input[type=password]  {
+    width: 85%;
+    padding: 0.5rem;
+    margin-bottom: 20px;
+    border: 1px solid var(--accent1);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: var(--accent1);
+    background-color: var(--bg-color);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#auth-form input[type=text]:focus, #create-room input[type="text"]:focus,
+#join-room input[type="text"]:focus, #auth-form input[type=password]:focus {
+    border-color: var(--bg-color);
+    box-shadow: 0 0 5px var(--dimshadow);
+}
+
+.open-dialog, #undo, #leave, #create-room button,
+#join-room button, #ai-form button, #auth-form button {
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border1);
+    color: var(--accent1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.open-dialog:hover, #undo:hover, #leave:hover, #create-room button:hover,
+#join-room button:hover, #ai-form button:hover, #auth-form button:hover {
+    filter: brightness(0.9);
+}
+
+.open-dialog:active, #undo:active, #leave:active, #create-room button:active,
+#join-room button:active, #ai-form button:active, #auth-form button:active {
+    filter: brightness(0.85);
+}
+
+#auth-form input[type="text"], #auth-form input[type="password"] {
+    background-color: var(--bg-color);
+}
+
+#auth-form button {
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#auth-form label {
+    font-size: 1.4rem;
+    color: var(--bg-color);
+}
+
+#auth-content h2 {
+    margin: 0 0;
+    text-align: center;
+    font-size: 2.1rem;
+    color: var(--bg-color);
+}
+
+#auth-content p {
+    margin: 5px 0;
+    text-align: center;
+    color: var(--bg-color);
+}
+
+#errors {
+    text-align: center;
+}
+
+.close-dialog {
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 0 hidden rgba(0, 0, 0, 0);
+    border-radius: 20px;
+    background-color: rgb(216, 11, 11);
+    cursor: pointer;
+}
+
+.close-dialog:hover {
+    filter: brightness(1.2);
+}
+
+.wrap {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border1);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.wrap:hover {
+    filter: brightness(0.9);
+}
+
+.wrap p {
+    padding: 0;
+    margin: 0;
+    color: var(--bg-color);
+}
+
+#create-room input[type="radio"], #ai-form input[type="radio"] {
+    display: none;
+}
+
+#create-room input[type="radio"]:checked, #ai-form input[type="radio"]:checked {
+    + p {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+}
